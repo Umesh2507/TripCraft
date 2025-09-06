@@ -138,7 +138,10 @@ export const Header = () => {
                 </Button>
                 <Button 
                   variant="hero" 
-                  onClick={() => openAuthModal('signup')}
+                  onClick={() => {
+                    setAuthMode('signup');
+                    setShowAuthModal(true);
+                  }}
                   className="text-sm"
                 >
                   Sign Up
