@@ -114,8 +114,8 @@ export const useTravelPlanner = () => {
       }
 
       // For Google Gemini API - replace with your actual API endpoint
-      // Using Gemini 2.5 Flash model
-      const API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+      // Using Gemini 2.5 Flash Lite model
+      const API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent";
 
       // Create a detailed prompt for the AI
       const prompt = `Create a detailed travel itinerary for ${formData.destination} from ${formData.startDate} to ${formData.endDate} for ${formatTravelers(formData.travelers)} with a ${formData.budget} budget.
