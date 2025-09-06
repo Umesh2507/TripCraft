@@ -18,17 +18,6 @@ export const useAuth = () => {
       async (event, session) => {
         setUser(session?.user ?? null);
         setLoading(false);
-
-        // Create user profile if signing up
-        if (event === 'SIGNED_UP' && session?.user) {
-          await supabase
-            .from('users')
-            .insert({
-              id: session.user.id,
-              email: session.user.email!,
-              full_name: session.user.user_metadata?.full_name || '',
-            });
-        }
       }
     );
 
@@ -45,6 +34,18 @@ export const useAuth = () => {
         },
       },
     });
+
+    // Create user profile immediately after successful signup
+    if (data.user && !error) {
+      await supabase
+        .from('users')
+        .insert({
+          id: data.user.id,
+          email: data.user.email!,
+          full_name: fullName || '',
+        });
+    }
+
     return { data, error };
   };
 
