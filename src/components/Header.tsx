@@ -45,22 +45,22 @@ export const Header = () => {
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
-        <div className="w-full px-4 py-0 flex h-16 items-center justify-between max-w-7xl mx-auto">
+        <div className="container mx-auto px-4 flex h-16 items-center justify-between max-w-7xl">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <Plane className="w-4 h-4 text-white" />
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity shrink-0 min-w-0">
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+              <Plane className="w-4 h-4 text-white fill-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold text-blue-600 whitespace-nowrap">
               Wandr
             </span>
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
+          <nav className="hidden md:flex items-center gap-6 flex-1 justify-center min-w-0">
             <Link 
               to="/" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+              className={`text-sm font-medium transition-colors hover:text-blue-600 whitespace-nowrap ${
                 location.pathname === '/' ? 'text-blue-600' : 'text-gray-600'
               }`}
             >
@@ -68,7 +68,7 @@ export const Header = () => {
             </Link>
             <Link 
               to="/community" 
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+              className={`text-sm font-medium transition-colors hover:text-blue-600 whitespace-nowrap ${
                 location.pathname === '/community' ? 'text-blue-600' : 'text-gray-600'
               }`}
             >
@@ -77,14 +77,14 @@ export const Header = () => {
           </nav>
 
           {/* Auth Section */}
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-3 shrink-0 min-w-0">
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={user.user_metadata?.avatar_url} />
-                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                      <AvatarFallback className="bg-blue-500 text-white">
                         {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -128,17 +128,17 @@ export const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center gap-2 shrink-0">
                 <Button 
                   variant="ghost" 
                   onClick={() => openAuthModal('signin')}
-                  className="text-sm font-medium text-gray-700 hover:text-blue-600"
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600 whitespace-nowrap"
                 >
                   Sign In
                 </Button>
                 <Button 
                   onClick={() => openAuthModal('signup')}
-                  className="text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+                  className="text-sm font-medium bg-blue-500 text-white hover:bg-blue-600 whitespace-nowrap"
                 >
                   Sign Up
                 </Button>
