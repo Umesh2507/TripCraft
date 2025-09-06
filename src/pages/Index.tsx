@@ -62,7 +62,7 @@ const Index = () => {
             </Badge>
             <Badge variant="secondary" className="px-4 py-2 text-base bg-white/20 text-white border-white/30">
               <MapPin className="w-4 h-4 mr-2" />
-              Custom Itineraries
+              My Custom Itineraries
             </Badge>
             <Badge variant="secondary" className="px-4 py-2 text-base bg-white/20 text-white border-white/30">
               <Clock className="w-4 h-4 mr-2" />
