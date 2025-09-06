@@ -29,8 +29,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'signin' }: AuthModal
 
   // Update mode when initialMode changes
   useEffect(() => {
+    setMode(initialMode);
     if (isOpen) {
-      setMode(initialMode);
       resetForm();
     }
   }, [isOpen, initialMode]);
