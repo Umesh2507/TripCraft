@@ -37,13 +37,23 @@ export const useAuth = () => {
 
     // Create user profile immediately after successful signup
     if (data.user && !error) {
-      await supabase
-        .from('users')
-        .insert({
-          id: data.user.id,
-          email: data.user.email!,
-          full_name: fullName || '',
-        });
+      try {
+        const { error: insertError } = await supabase
+          .from('users')
+          .insert({
+            id: data.user.id,
+            email: data.user.email!,
+            full_name: fullName || '',
+          });
+        
+        if (insertError) {
+          console.error('Failed to create user profile:', insertError);
+        } else {
+          console.log('User profile created successfully for:', data.user.email);
+        }
+      } catch (profileError) {
+        console.error('Error creating user profile:', profileError);
+      }
     }
 
     return { data, error };
