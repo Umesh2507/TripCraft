@@ -31,7 +31,7 @@ export const Header = () => {
   if (loading) {
     return (
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 flex h-16 items-center justify-between">
+        <div className="container mx-auto px-4 flex h-16 items-center justify-between max-w-7xl">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
             <div className="w-32 h-6 bg-gray-200 rounded animate-pulse" />
@@ -44,32 +44,32 @@ export const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 flex h-16 items-center justify-between max-w-7xl">
+      <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
+        <div className="w-full px-4 py-0 flex h-16 items-center justify-between max-w-7xl mx-auto">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center">
+          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0">
+            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
               <Plane className="w-4 h-4 text-white" />
             </div>
-            <span className="text-xl font-display font-bold bg-gradient-hero bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
               Wandr
             </span>
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
             <Link 
               to="/" 
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/' ? 'text-primary' : 'text-muted-foreground'
+              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                location.pathname === '/' ? 'text-blue-600' : 'text-gray-600'
               }`}
             >
               Home
             </Link>
             <Link 
               to="/community" 
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === '/community' ? 'text-primary' : 'text-muted-foreground'
+              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
+                location.pathname === '/community' ? 'text-blue-600' : 'text-gray-600'
               }`}
             >
               Community
@@ -77,14 +77,14 @@ export const Header = () => {
           </nav>
 
           {/* Auth Section */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 flex-shrink-0">
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={user.user_metadata?.avatar_url} />
-                      <AvatarFallback className="bg-gradient-hero text-white">
+                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                         {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -128,18 +128,17 @@ export const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 <Button 
                   variant="ghost" 
                   onClick={() => openAuthModal('signin')}
-                  className="text-sm whitespace-nowrap"
+                  className="text-sm font-medium text-gray-700 hover:text-blue-600"
                 >
                   Sign In
                 </Button>
                 <Button 
-                  variant="hero" 
                   onClick={() => openAuthModal('signup')}
-                  className="text-sm whitespace-nowrap"
+                  className="text-sm font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
                 >
                   Sign Up
                 </Button>
