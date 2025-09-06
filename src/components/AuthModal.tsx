@@ -81,21 +81,17 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'signin' }: AuthModal
         const { error } = await signIn(formData.email, formData.password);
         
         if (error) {
-          if (error.message.includes('Invalid login credentials') || 
-              error.message.includes('Email not confirmed') ||
-              error.message.includes('Invalid email or password')) {
-            // Check if user exists but credentials are wrong
-            if (error.message.includes('Invalid login credentials')) {
-              toast.error('Incorrect email or password. Please try again.');
-            } else {
-              // User might not exist, suggest signup
-              toast.error('Account not found. Would you like to sign up?', {
-                action: {
-                  label: 'Sign Up',
-                  onClick: () => setMode('signup')
-                }
-              });
-            }
+          if (error.code === 'invalid_credentials') {
+            toast.error('Incorrect email or password. Please try again.');
+          } else if (error.code === 'email_not_confirmed') {
+            toast.error('Please check your email and confirm your account before signing in.');
+          } else if (error.code === 'user_not_found') {
+            toast.error('Account not found. Would you like to sign up?', {
+              action: {
+                label: 'Sign Up',
+                onClick: () => setMode('signup')
+              }
+            });
           } else {
             toast.error(error.message);
           }
@@ -108,13 +104,17 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'signin' }: AuthModal
         const { error } = await signUp(formData.email, formData.password, formData.fullName);
         
         if (error) {
-          if (error.message.includes('User already registered')) {
+          if (error.code === 'user_already_registered') {
             toast.error('Account already exists. Please sign in instead.', {
               action: {
                 label: 'Sign In',
                 onClick: () => setMode('signin')
               }
             });
+          } else if (error.code === 'weak_password') {
+            toast.error('Password is too weak. Please choose a stronger password.');
+          } else if (error.code === 'invalid_email') {
+            toast.error('Please enter a valid email address.');
           } else {
             toast.error(error.message);
           }
