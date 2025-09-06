@@ -35,6 +35,13 @@ export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = ''
 
     setIsSaving(true);
     try {
+      console.log('SaveItineraryDialog: Starting save with data:', {
+        title: title.trim(),
+        isPublic,
+        luxuryLevel,
+        comfortLevel,
+      });
+      
       const success = await onSave({
         title: title.trim(),
         isPublic,
@@ -51,9 +58,11 @@ export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = ''
         setLuxuryLevel('moderate');
         setComfortLevel('standard');
       } else {
+        console.error('SaveItineraryDialog: onSave returned false');
         toast.error('Failed to save itinerary');
       }
     } catch (error) {
+      console.error('SaveItineraryDialog: Error during save:', error);
       toast.error('Failed to save itinerary');
     } finally {
       setIsSaving(false);

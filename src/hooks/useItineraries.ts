@@ -57,7 +57,26 @@ export const useItineraries = () => {
     if (!user) throw new Error('User must be authenticated');
 
     try {
-      console.log('Attempting to save itinerary:', itineraryData);
+      console.log('Attempting to save itinerary:', {
+        ...itineraryData,
+        user_id: user.id,
+        user_email: user.email
+      });
+      
+      // First check if user exists in users table
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('id')
+        .eq('id', user.id)
+        .single();
+      
+      if (userError || !userData) {
+        console.error('User not found in users table:', userError);
+        throw new Error('User profile not found. Please try signing out and back in.');
+      }
+      
+      console.log('User found in database:', userData);
+      
       const { data, error } = await supabase
         .from('itineraries')
         .insert({
@@ -68,7 +87,13 @@ export const useItineraries = () => {
         .single();
 
       if (error) {
-        console.error('Supabase error:', error);
+        console.error('Supabase insert error:', {
+          error,
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          hint: error.hint
+        });
         throw error;
       }
       
