@@ -16,7 +16,7 @@ interface SaveItineraryDialogProps {
     isPublic: boolean;
     luxuryLevel: 'budget' | 'moderate' | 'luxury' | 'premium';
     comfortLevel: 'backpacker' | 'standard' | 'comfort' | 'luxury';
-  }) => Promise<boolean>;
+  }) => Promise<{ success: boolean; error?: string }>;
   defaultTitle?: string;
 }
 
@@ -42,14 +42,14 @@ export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = ''
         comfortLevel,
       });
       
-      const success = await onSave({
+      const result = await onSave({
         title: title.trim(),
         isPublic,
         luxuryLevel,
         comfortLevel,
       });
 
-      if (success) {
+      if (result.success) {
         toast.success('Itinerary saved successfully!');
         onClose();
         // Reset form
@@ -58,8 +58,9 @@ export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = ''
         setLuxuryLevel('moderate');
         setComfortLevel('standard');
       } else {
-        console.error('SaveItineraryDialog: onSave returned false');
-        toast.error('Failed to save itinerary');
+        const errorMessage = result.error || 'Failed to save itinerary';
+        console.error('SaveItineraryDialog: Save failed:', errorMessage);
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error('SaveItineraryDialog: Error during save:', error);

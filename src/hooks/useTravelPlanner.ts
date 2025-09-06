@@ -254,8 +254,10 @@ Please provide a comprehensive travel plan in JSON format with the following str
     isPublic: boolean;
     luxuryLevel: 'budget' | 'moderate' | 'luxury' | 'premium';
     comfortLevel: 'backpacker' | 'standard' | 'comfort' | 'luxury';
-  }) => {
-    if (!itinerary) return;
+  }): Promise<{ success: boolean; error?: string }> => {
+    if (!itinerary) {
+      return { success: false, error: 'No itinerary to save' };
+    }
 
     try {
       await saveItinerary({
@@ -268,10 +270,11 @@ Please provide a comprehensive travel plan in JSON format with the following str
         itinerary_data: itinerary,
       });
       setShowSaveDialog(false);
-      return true;
+      return { success: true };
     } catch (error) {
       console.error('Failed to save itinerary:', error);
-      return false;
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      return { success: false, error: errorMessage };
     }
   };
 
