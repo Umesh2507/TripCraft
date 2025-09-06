@@ -42,6 +42,64 @@ export const useTravelPlanner = () => {
   const [error, setError] = useState<string | null>(null);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
 
+  // Helper function to implement retry logic with exponential backoff
+  const retryWithBackoff = async (fn: () => Promise<Response>, maxRetries: number = 3): Promise<Response> => {
+    let lastError: Error;
+    
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const response = await fn();
+        
+        // If we get a successful response, return it
+        if (response.ok) {
+          return response;
+        }
+        
+        // Check if it's a retryable error (429 Too Many Requests or 5xx server errors)
+        if (response.status === 429 || (response.status >= 500 && response.status < 600)) {
+          const errorData = await response.json().catch(() => ({}));
+          const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+          
+          // Check for specific overload messages
+          if (errorMessage.toLowerCase().includes('overloaded') || 
+              errorMessage.toLowerCase().includes('too many requests') ||
+              response.status === 429) {
+            
+            // If this is not the last attempt, wait and retry
+            if (attempt < maxRetries - 1) {
+              const delay = Math.pow(2, attempt) * 1000; // Exponential backoff: 1s, 2s, 4s
+              await new Promise(resolve => setTimeout(resolve, delay));
+              continue;
+            }
+          }
+          
+          lastError = new Error(errorMessage);
+        } else {
+          // For non-retryable errors, throw immediately
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error?.message || `HTTP ${response.status}`);
+        }
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error('Unknown error');
+        
+        // If this is not the last attempt and it's a network error, retry
+        if (attempt < maxRetries - 1 && (error instanceof TypeError || lastError.message.includes('fetch'))) {
+          const delay = Math.pow(2, attempt) * 1000;
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+        
+        // If it's not a retryable error, throw immediately
+        if (!(error instanceof TypeError) && !lastError.message.includes('overloaded')) {
+          throw lastError;
+        }
+      }
+    }
+    
+    // If we've exhausted all retries, throw the last error
+    throw lastError;
+  };
+
   const generateItinerary = async (formData: TripFormData) => {
     setIsLoading(true);
     setError(null);
@@ -93,24 +151,21 @@ Please provide a comprehensive travel plan in JSON format with the following str
 }`;
 
       // Make the API call
-      const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: prompt
+      const response = await retryWithBackoff(() => 
+        fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: prompt
+              }]
             }]
-          }]
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error?.message || "Failed to get itinerary from AI service.");
-      }
+          }),
+        })
+      );
 
       const data = await response.json();
       
