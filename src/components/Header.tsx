@@ -52,7 +52,7 @@ export const Header = () => {
               <Plane className="w-4 h-4 text-white" />
             </div>
             <span className="text-xl font-display font-bold bg-gradient-hero bg-clip-text text-transparent">
-              AI Travel Planner
+              Wandr
             </span>
           </Link>
 

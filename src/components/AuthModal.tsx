@@ -146,7 +146,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'signin' }: AuthModal
             <div className="w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center">
               <Plane className="w-4 h-4 text-white" />
             </div>
-            {mode === 'signin' ? 'Welcome Back' : 'Join AI Travel Planner'}
+            {mode === 'signin' ? 'Welcome Back' : 'Join Wandr'}
           </DialogTitle>
         </DialogHeader>
 
