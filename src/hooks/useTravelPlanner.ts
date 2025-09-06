@@ -224,7 +224,7 @@ Please provide a comprehensive travel plan in JSON format with the following str
               ? formData.budget as 'budget' | 'moderate' | 'luxury' | 'premium' 
               : 'moderate',
             comfort_level: 'standard', // Default comfort level
-            is_public: true, // Make it public so other users can view it
+            is_public: false, // Default to private for auto-save
             itinerary_data: realItinerary,
           });
           console.log('Itinerary auto-saved successfully');
