@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Travel Planner Design System - Ocean to Sunset Theme */
+
+@layer base {
+  :root {
+    /* Background system */
+    --background: 220 15% 97%;
+    --foreground: 215 25% 15%;
+
+    /* Card system */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    /* Popover system */
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Primary - Deep Ocean Blue */
+    --primary: 200 90% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 200 90% 40%;
+
+    /* Secondary - Sunset Orange */
+    --secondary: 25 85% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 25 85% 55%;
+
+    /* Muted system */
+    --muted: 220 15% 95%;
+    --muted-foreground: 215 15% 50%;
+
+    /* Accent - Turquoise */
+    --accent: 180 70% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border and input */
+    --border: 220 15% 88%;
+    --input: 220 15% 92%;
+    --ring: 200 90% 45%;
+
+    --radius: 0.75rem;
+
+    /* Travel-specific colors */
+    --ocean-deep: 200 90% 25%;
+    --ocean-light: 200 70% 85%;
+    --sunset-warm: 25 85% 60%;
+    --sunset-light: 25 60% 90%;
+    --adventure-green: 140 60% 45%;
+    --sky-blue: 210 80% 70%;
+
+    /* Beautiful gradients */
+    --gradient-ocean: linear-gradient(135deg, hsl(200 90% 45%), hsl(180 70% 50%));
+    --gradient-sunset: linear-gradient(135deg, hsl(25 85% 60%), hsl(15 80% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(200 90% 45%) 0%, hsl(180 70% 50%) 50%, hsl(25 85% 60%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 15% 98%));
+
+    /* Shadows with travel theme */
+    --shadow-travel: 0 10px 40px -10px hsl(200 90% 45% / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(200 90% 45% / 0.1);
+    --shadow-elevation: 0 20px 60px -10px hsl(200 90% 45% / 0.2);
+
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+
+  .dark {
+    /* Dark theme for travel planner */
+    --background: 215 25% 8%;
+    --foreground: 220 15% 92%;
+
+    --card: 215 25% 10%;
+    --card-foreground: 220 15% 92%;
+
+    --popover: 215 25% 10%;
+    --popover-foreground: 220 15% 92%;
+
+    --primary: 200 90% 55%;
+    --primary-foreground: 215 25% 8%;
+    --primary-hover: 200 90% 60%;
+
+    --secondary: 25 85% 65%;
+    --secondary-foreground: 215 25% 8%;
+    --secondary-hover: 25 85% 70%;
+
+    --muted: 215 25% 15%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 180 70% 60%;
+    --accent-foreground: 215 25% 8%;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 215 25% 8%;
+
+    --border: 215 25% 20%;
+    --input: 215 25% 15%;
+    --ring: 200 90% 55%;
+
+    /* Dark gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(200 90% 35%) 0%, hsl(180 70% 40%) 50%, hsl(25 85% 50%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(215 25% 10%), hsl(215 25% 8%));
+    
+    /* Dark shadows */
+    --shadow-travel: 0 10px 40px -10px hsl(200 90% 55% / 0.4);
+    --shadow-card: 0 4px 20px -4px hsl(200 90% 55% / 0.2);
+    --shadow-elevation: 0 20px 60px -10px hsl(200 90% 55% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+}
+
+@layer components {
+  /* Gradient backgrounds */
+  .bg-gradient-ocean {
+    background: var(--gradient-ocean);
+  }
+
+  .bg-gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+
+  /* Custom shadows */
+  .shadow-travel {
+    box-shadow: var(--shadow-travel);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-elevation {
+    box-shadow: var(--shadow-elevation);
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* Travel-themed animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes pulse-travel {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-travel {
+    animation: pulse-travel 2s ease-in-out infinite;
+  }
+}
