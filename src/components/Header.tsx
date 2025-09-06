@@ -31,7 +31,7 @@ export const Header = () => {
   if (loading) {
     return (
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container mx-auto px-4 flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse" />
             <div className="w-32 h-6 bg-gray-200 rounded animate-pulse" />
@@ -45,7 +45,7 @@ export const Header = () => {
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container mx-auto px-4 flex h-16 items-center justify-between max-w-7xl">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-gradient-hero rounded-full flex items-center justify-center">
@@ -77,7 +77,7 @@ export const Header = () => {
           </nav>
 
           {/* Auth Section */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -128,18 +128,18 @@ export const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <Button 
                   variant="ghost" 
                   onClick={() => openAuthModal('signin')}
-                  className="text-sm"
+                  className="text-sm whitespace-nowrap"
                 >
                   Sign In
                 </Button>
                 <Button 
                   variant="hero" 
                   onClick={() => openAuthModal('signup')}
-                  className="text-sm"
+                  className="text-sm whitespace-nowrap"
                 >
                   Sign Up
                 </Button>
