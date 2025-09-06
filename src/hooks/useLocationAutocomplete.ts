@@ -33,9 +33,9 @@ export const useLocationAutocomplete = () => {
       const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
       
       if (!API_KEY) {
-        console.warn("VITE_GEMINI_API_KEY not found. Location autocomplete disabled.");
-        setError("Location autocomplete unavailable");
-        setSuggestions([]);
+        // Fallback to static suggestions when API key is not available
+        const staticSuggestions = getStaticSuggestions(searchQuery);
+        setSuggestions(staticSuggestions);
         setIsLoading(false);
         return;
       }
@@ -94,11 +94,40 @@ Focus on popular travel destinations that match the input. Include the appropria
       setSuggestions(parsedSuggestions || []);
     } catch (err) {
       console.error('Error fetching location suggestions:', err);
-      setError('Failed to load suggestions');
-      setSuggestions([]);
+      // Fallback to static suggestions on API error
+      const staticSuggestions = getStaticSuggestions(searchQuery);
+      setSuggestions(staticSuggestions);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Fallback function for static suggestions
+  const getStaticSuggestions = (query: string): LocationSuggestion[] => {
+    const popularDestinations = [
+      { id: 'paris-france', name: 'Paris', fullName: 'Paris, France', country: 'France', type: 'city' as const, flag: '🇫🇷' },
+      { id: 'tokyo-japan', name: 'Tokyo', fullName: 'Tokyo, Japan', country: 'Japan', type: 'city' as const, flag: '🇯🇵' },
+      { id: 'new-york-usa', name: 'New York', fullName: 'New York, USA', country: 'United States', type: 'city' as const, flag: '🇺🇸' },
+      { id: 'london-uk', name: 'London', fullName: 'London, UK', country: 'United Kingdom', type: 'city' as const, flag: '🇬🇧' },
+      { id: 'rome-italy', name: 'Rome', fullName: 'Rome, Italy', country: 'Italy', type: 'city' as const, flag: '🇮🇹' },
+      { id: 'barcelona-spain', name: 'Barcelona', fullName: 'Barcelona, Spain', country: 'Spain', type: 'city' as const, flag: '🇪🇸' },
+      { id: 'amsterdam-netherlands', name: 'Amsterdam', fullName: 'Amsterdam, Netherlands', country: 'Netherlands', type: 'city' as const, flag: '🇳🇱' },
+      { id: 'sydney-australia', name: 'Sydney', fullName: 'Sydney, Australia', country: 'Australia', type: 'city' as const, flag: '🇦🇺' },
+      { id: 'dubai-uae', name: 'Dubai', fullName: 'Dubai, UAE', country: 'United Arab Emirates', type: 'city' as const, flag: '🇦🇪' },
+      { id: 'singapore', name: 'Singapore', fullName: 'Singapore', country: 'Singapore', type: 'city' as const, flag: '🇸🇬' },
+      { id: 'bali-indonesia', name: 'Bali', fullName: 'Bali, Indonesia', country: 'Indonesia', type: 'region' as const, flag: '🇮🇩' },
+      { id: 'santorini-greece', name: 'Santorini', fullName: 'Santorini, Greece', country: 'Greece', type: 'city' as const, flag: '🇬🇷' },
+      { id: 'iceland', name: 'Iceland', fullName: 'Iceland', country: 'Iceland', type: 'country' as const, flag: '🇮🇸' },
+      { id: 'thailand', name: 'Thailand', fullName: 'Thailand', country: 'Thailand', type: 'country' as const, flag: '🇹🇭' },
+      { id: 'morocco', name: 'Morocco', fullName: 'Morocco', country: 'Morocco', type: 'country' as const, flag: '🇲🇦' },
+    ];
+
+    const lowerQuery = query.toLowerCase();
+    return popularDestinations.filter(dest => 
+      dest.name.toLowerCase().includes(lowerQuery) ||
+      dest.country.toLowerCase().includes(lowerQuery) ||
+      dest.fullName.toLowerCase().includes(lowerQuery)
+    ).slice(0, 8);
   };
 
   useEffect(() => {
