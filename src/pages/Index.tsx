@@ -5,7 +5,6 @@ import { useTravelPlanner } from "@/hooks/useTravelPlanner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plane, Sparkles, MapPin, Clock, Users, Star } from "lucide-react";
-import heroImage from "@/assets/hero-travel.jpg";
 
 const Index = () => {
   const { isLoading, itinerary, error, generateItinerary, resetPlanner } = useTravelPlanner();
@@ -35,7 +34,7 @@ const Index = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
+          style={{ backgroundImage: `url(https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)` }}
         >
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
