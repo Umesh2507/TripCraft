@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Wandr - AI Travel Planner
 
 ## Project info
 
