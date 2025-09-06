@@ -337,6 +337,7 @@ export const TripItinerary = ({ itinerary, onNewSearch }: TripItineraryProps) =>
         onClose={() => setShowSaveDialog(false)}
         onSave={saveCurrentItinerary}
         defaultTitle={`${itinerary.destination} Adventure`}
+        itineraryData={itinerary}
       />
     </div>
   );

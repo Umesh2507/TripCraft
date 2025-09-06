@@ -254,20 +254,20 @@ Please provide a comprehensive travel plan in JSON format with the following str
     isPublic: boolean;
     luxuryLevel: 'budget' | 'moderate' | 'luxury' | 'premium';
     comfortLevel: 'backpacker' | 'standard' | 'comfort' | 'luxury';
-  }): Promise<{ success: boolean; error?: string }> => {
-    if (!itinerary) {
+  }, itineraryData: TripItineraryData): Promise<{ success: boolean; error?: string }> => {
+    if (!itineraryData) {
       return { success: false, error: 'No itinerary to save' };
     }
 
     try {
       await saveItinerary({
         title: options.title,
-        destination: itinerary.destination,
-        duration_days: parseInt(itinerary.duration.split(' ')[0]),
+        destination: itineraryData.destination,
+        duration_days: parseInt(itineraryData.duration.split(' ')[0]),
         luxury_level: options.luxuryLevel,
         comfort_level: options.comfortLevel,
         is_public: options.isPublic,
-        itinerary_data: itinerary,
+        itinerary_data: itineraryData,
       });
       setShowSaveDialog(false);
       return { success: true };

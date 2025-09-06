@@ -16,11 +16,12 @@ interface SaveItineraryDialogProps {
     isPublic: boolean;
     luxuryLevel: 'budget' | 'moderate' | 'luxury' | 'premium';
     comfortLevel: 'backpacker' | 'standard' | 'comfort' | 'luxury';
-  }) => Promise<{ success: boolean; error?: string }>;
+  }, itineraryData: any) => Promise<{ success: boolean; error?: string }>;
   defaultTitle?: string;
+  itineraryData: any;
 }
 
-export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = '' }: SaveItineraryDialogProps) => {
+export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = '', itineraryData }: SaveItineraryDialogProps) => {
   const [title, setTitle] = useState(defaultTitle);
   const [isPublic, setIsPublic] = useState(false);
   const [luxuryLevel, setLuxuryLevel] = useState<'budget' | 'moderate' | 'luxury' | 'premium'>('moderate');
@@ -47,7 +48,7 @@ export const SaveItineraryDialog = ({ isOpen, onClose, onSave, defaultTitle = ''
         isPublic,
         luxuryLevel,
         comfortLevel,
-      });
+      }, itineraryData);
 
       if (result.success) {
         toast.success('Itinerary saved successfully!');
