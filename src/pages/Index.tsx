@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { TravelPlannerForm, type TripFormData } from "@/components/TravelPlannerForm";
 import { TripItinerary } from "@/components/TripItinerary";
+import { TravelCarousel } from "@/components/TravelCarousel";
+import { SiteMap } from "@/components/SiteMap";
 import { useTravelPlanner } from "@/hooks/useTravelPlanner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,12 +34,7 @@ const Index = () => {
     <main className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(https://images.pexels.com/photos/1371360/pexels-photo-1371360.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop)` }}
-        >
-          <div className="absolute inset-0 bg-black/40"></div>
-        </div>
+        <TravelCarousel />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <div className="animate-float">
@@ -170,6 +167,9 @@ const Index = () => {
           )}
         </div>
       </section>
+
+      {/* Site Map */}
+      <SiteMap />
     </main>
   );
 };
