@@ -118,7 +118,7 @@ export const TravelCarousel = () => {
   const currentPlace = travelPlaces[currentIndex];
 
   return (
-    <div className="relative w-full h-full overflow-hidden">
+    <div className="absolute inset-0 w-full h-full overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
@@ -131,7 +131,7 @@ export const TravelCarousel = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white border-white/30"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm"
         onClick={prevSlide}
       >
         <ChevronLeft className="w-6 h-6" />
@@ -140,14 +140,14 @@ export const TravelCarousel = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white border-white/30"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm"
         onClick={nextSlide}
       >
         <ChevronRight className="w-6 h-6" />
       </Button>
 
       {/* Place Information */}
-      <div className="absolute bottom-8 left-8 z-20 text-white max-w-md">
+      <div className="absolute bottom-8 left-4 md:left-8 z-20 text-white max-w-md mx-4 md:mx-0">
         <div className="bg-black/50 backdrop-blur-sm rounded-lg p-4">
           <h3 className="text-2xl font-bold mb-1">{currentPlace.name}</h3>
           <p className="text-lg mb-2">{currentPlace.country}, {currentPlace.continent}</p>
@@ -156,7 +156,7 @@ export const TravelCarousel = () => {
       </div>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-8 right-8 z-20 flex space-x-2">
+      <div className="absolute bottom-8 right-4 md:right-8 z-20 flex space-x-2">
         {travelPlaces.map((_, index) => (
           <button
             key={index}
