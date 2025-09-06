@@ -86,7 +86,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'signin' }: AuthModal
               error.message.includes('Invalid email or password')) {
             // Check if user exists but credentials are wrong
             if (error.message.includes('Invalid login credentials')) {
-              toast.error('Invalid credentials');
+              toast.error('Incorrect email or password. Please try again.');
             } else {
               // User might not exist, suggest signup
               toast.error('Account not found. Would you like to sign up?', {
